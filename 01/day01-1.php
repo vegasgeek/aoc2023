@@ -1,5 +1,5 @@
 <?php
-// Day 1.
+// Day 1 - Part 1.
 
 $number = 0;
 $file   = fopen( 'data.txt', 'r' );
