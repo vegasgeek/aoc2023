@@ -27,7 +27,6 @@ if ( ! $file ) {
 	exit;
 }
 
-$count = 0;
 while ( ! feof( $file ) ) {
 	$line = trim( fgets( $file, 1024 ) );
 
