@@ -20,16 +20,18 @@ while ( ! feof( $file ) ) {
 	$game                = trim( fgets( $file, 1024 ) );
 	$parts               = explode( ':', $game );
 	$dice_count          = array();
-	$dice_count['blue']  = 0;
-	$dice_count['green'] = 0;
-	$dice_count['red']   = 0;
 
 	$game_num = intval( filter_var( $parts[0], FILTER_SANITIZE_NUMBER_INT ) );
 
 	$round = explode( ';', $parts[1] );
 
+	$valid = true;
 	foreach ( $round as $key => $value ) {
-		$dice = explode( ',', $value );
+
+		$dice                = explode( ',', $value );
+		$dice_count['blue']  = 0;
+		$dice_count['green'] = 0;
+		$dice_count['red']   = 0;
 
 		foreach ( $dice as $k => $v ) {
 			$num   = intval( filter_var( $v, FILTER_SANITIZE_NUMBER_INT ) );
@@ -37,12 +39,13 @@ while ( ! feof( $file ) ) {
 
 			$dice_count[ $color ] += $num;
 		}
+
+		if ( ( $dice_count['blue'] > $limit['blue'] ) || ( $dice_count['green'] > $limit['green'] ) || ( $dice_count['red'] > $limit['red'] ) ) {
+			$valid = false;
+		}
 	}
 
-	if ( ( $dice_count['blue'] > $limit['blue'] ) || ( $dice_count['green'] > $limit['green'] ) || ( $dice_count['red'] > $limit['red'] ) ) {
-		// echo 'Game ' . $game_num . ' is invalid.' . "\n";
-	} else {
-		echo 'Game ' . $game_num . ' is valid.' . "\n";
+	if ( $valid ) {
 		$number += intval( $game_num );
 	}
 }
@@ -50,13 +53,3 @@ while ( ! feof( $file ) ) {
 fclose( $file );
 
 echo $number;
-
-/**
- * Status: Failing
- * I'm getting an answer of 309.
- * I'm showing the following games as valid:
- * 12, 29, 43, 55, 77, 93
- * total those up and it equals 309.
- *
- * Not sure what I'm missing.
- */
