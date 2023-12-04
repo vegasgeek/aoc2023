@@ -13,8 +13,8 @@ while ( ! feof( $file ) ) {
 }
 
 foreach ( $line as $key => $value ) {
-	$len = strlen( $value );
-	$pos = 0;
+	$len     = strlen( $value );
+	$pos     = 0;
 	$numbers = array();
 	$symbols = array();
 	while ( $pos < $len ) {
@@ -31,10 +31,10 @@ foreach ( $line as $key => $value ) {
 				$pos++;
 			}
 			$numbers[] = array(
-				'uuid'     => make_uuid(),
-				'number'   => $num,
-				'pos' => $pos - strlen( $num ),
-				'length'   => strlen( $num ),
+				'uuid'   => make_uuid(),
+				'number' => $num,
+				'pos'    => $pos - strlen( $num ),
+				'length' => strlen( $num ),
 			);
 			continue;
 		}
@@ -82,7 +82,7 @@ foreach ( $line as $key => $val ) {
 
 // Look at line above.
 foreach ( $line as $key => $val ) {
-	$test_line = $key -1;
+	$test_line = $key - 1;
 
 	// loop through each symbol on a line.
 	foreach ( $val['symbols'] as $symbol ) {
