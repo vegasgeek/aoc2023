@@ -40,7 +40,7 @@ foreach ( $s_to_s as $key => $value ) {
 	$length = $value['length'];
 
 	while ( $length > 0 ) {
-		$soil_map[ $source ] = $dest;
+		$soil_map[ $source ] = intval( $dest );
 		$dest++;
 		$source++;
 		$length--;
@@ -66,12 +66,18 @@ $s_to_f = array(
 );
 
 foreach ( $s_to_f as $key => $value ) {
-	$dest   = $soil_map[ $value['dest_start'] ];
+	if ( ! isset( $soil_map[ $value['dest_start'] ] ) ) {
+		$dest = $value['dest_start'];
+	} else {
+		$dest = $soil_map[ $key ];
+	}
+	// $dest   = $soil_map[ $value['dest_start'] ];
 	$source = $value['source_start'];
 	$length = $value['length'];
+	// echo $dest . ' - ' . $source . ' - ' . $length . "\n";
 
 	while ( $length > 0 ) {
-		$fert_map[ $source ] = $dest;
+		$fert_map[ $source ] = intval( $dest );
 		$dest++;
 		$source++;
 		$length--;
@@ -102,12 +108,18 @@ $f_to_w = array(
 );
 
 foreach ( $f_to_w as $key => $value ) {
-	$dest   = $fert_map[ $value['dest_start'] ];
+	if ( ! isset( $fert_map[ $value['dest_start'] ] ) ) {
+		$dest = $value['dest_start'];
+	} else {
+		$dest = $fert_map[ $key ];
+	}
+
+	// $dest   = $fert_map[ $value['dest_start'] ];
 	$source = $value['source_start'];
 	$length = $value['length'];
 
 	while ( $length > 0 ) {
-		$water_map[ $source ] = $dest;
+		$water_map[ $source ] = intval( $dest );
 		$dest++;
 		$source++;
 		$length--;
@@ -128,14 +140,18 @@ $w_to_l = array(
 );
 
 foreach ( $w_to_l as $key => $value ) {
-	echo $water_map[ $value['dest_start'] ] . "\n";
-	print_r( $value );
-	$dest   = $water_map[ $value['dest_start'] ];
+	if ( ! isset( $water_map[ $value['dest_start'] ] ) ) {
+		$dest = $value['dest_start'];
+	} else {
+		$dest = $water_map[ $key ];
+	}
+
+	// $dest   = $water_map[ $value['dest_start'] ];
 	$source = $value['source_start'];
 	$length = $value['length'];
 
 	while ( $length > 0 ) {
-		$light_map[ $source ] = $dest;
+		$light_map[ $source ] = intval( $dest );
 		$dest++;
 		$source++;
 		$length--;
@@ -161,12 +177,18 @@ $l_to_t = array(
 );
 
 foreach ( $l_to_t as $key => $value ) {
-	$dest   = $light_map[ $value['dest_start'] ];
+	if ( ! isset( $light_map[ $value['dest_start'] ] ) ) {
+		$dest = $value['dest_start'];
+	} else {
+		$dest = $light_map[ $key ];
+	}
+
+	// $dest   = $light_map[ $value['dest_start'] ];
 	$source = $value['source_start'];
 	$length = $value['length'];
 
 	while ( $length > 0 ) {
-		$temp_map[ $source ] = $dest;
+		$temp_map[ $source ] = intval( $dest );
 		$dest++;
 		$source++;
 		$length--;
@@ -187,12 +209,18 @@ $t_to_h = array(
 );
 
 foreach ( $t_to_h as $key => $value ) {
-	$dest   = $temp_map[ $value['dest_start'] ];
+	if ( ! isset( $temp_map[ $value['dest_start'] ] ) ) {
+		$dest = $value['dest_start'];
+	} else {
+		$dest = $temp_map[ $key ];
+	}
+
+	// $dest   = $temp_map[ $value['dest_start'] ];
 	$source = $value['source_start'];
 	$length = $value['length'];
 
 	while ( $length > 0 ) {
-		$humid_map[ $source ] = $dest;
+		$humid_map[ $source ] = intval( $dest );
 		$dest++;
 		$source++;
 		$length--;
@@ -213,30 +241,33 @@ $h_to_l = array(
 );
 
 foreach ( $h_to_l as $key => $value ) {
-	$dest   = $humid_map[ $value['dest_start'] ];
+	if ( ! isset( $humid_map[ $value['dest_start'] ] ) ) {
+		$dest = $value['dest_start'];
+	} else {
+		$dest = $humid_map[ $key ];
+	}
+
+	// $dest   = $humid_map[ $value['dest_start'] ];
 	$source = $value['source_start'];
 	$length = $value['length'];
 
 	while ( $length > 0 ) {
-		$loc_map[ $source ] = $dest;
+		$loc_map[ $source ] = intval( $dest );
 		$dest++;
 		$source++;
 		$length--;
 	}
 }
 
-$seed = 79;
-$soild = $soil_map[ $seed ] ?? $seed;
-$fertd = $fert_map[ $soild ] ?? $soild;
+$seed   = 79;
+$soild  = $soil_map[ $seed ] ?? $seed;
+$fertd  = $fert_map[ $soild ] ?? $soild;
 $waterd = $water_map[ $fertd ] ?? $fertd;
 $lightd = $light_map[ $waterd ] ?? $waterd;
-$tempd = $temp_map[ $lightd ] ?? $lightd;
+$tempd  = $temp_map[ $lightd ] ?? $lightd;
 $humidd = $humid_map[ $tempd ] ?? $tempd;
-$locd = $loc_map[ $humidd ] ?? $humidd;
+$locd   = $loc_map[ $humidd ] ?? $humidd;
 
-// print_r( $soil_map );
-// print_r( $fert_map );
-// print_r( $water_map );
 echo 'Seed: ' . $seed . "\n";
 echo 'Soil: ' . $soild . "\n";
 echo 'Fert: ' . $fertd . "\n";
@@ -245,3 +276,19 @@ echo 'Light: ' . $lightd . "\n";
 echo 'Temp: ' . $tempd . "\n";
 echo 'Humid: ' . $humidd . "\n";
 echo 'Loc: ' . $locd . "\n";
+
+ksort( $soil_map );
+ksort( $fert_map );
+ksort( $water_map );
+ksort( $light_map );
+ksort( $temp_map );
+ksort( $humid_map );
+ksort( $loc_map );
+
+// print_r( $soil_map );
+// print_r( $fert_map );
+// print_r( $water_map );
+// print_r( $light_map );
+// print_r( $temp_map );
+// print_r( $humid_map );
+// print_r( $loc_map );
