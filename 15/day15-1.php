@@ -17,10 +17,8 @@ $data = explode( ',', $input );
 $results = array();
 foreach ( $data as $key => $string ) {
 	$val = dohash( $string );
-	$results[ $string ] = $val;
+	$results[] = $val;
 }
-
-print_r( $results );
 
 $sum = array_sum( $results );
 echo 'Sum: ' . $sum . "\n";
