@@ -9,7 +9,7 @@ if ( ! $file ) {
 }
 
 while ( ! feof( $file ) ) {
-	$input = trim( fgets( $file, 65535 ) );
+	$input = trim( fgets( $file ) );
 }
 
 $data = explode( ',', $input );
